@@ -1,0 +1,61 @@
+﻿<Window x:Class="TCPTalkClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCPTalkClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="fontStyle" TargetType="Control">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!-- Row 0 客户端IP及状态 -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="服务器地址：" Style="{StaticResource fontStyle}"/>
+            <TextBox x:Name="textBoxForServerAdress" IsReadOnly="False"
+                     MinWidth="200" Style="{StaticResource fontStyle}"
+                     Text="{Binding ClientAddress}"/>
+            <Label Content="端口" Style="{StaticResource fontStyle}" />
+            <TextBox x:Name="textBoxForServerPort" Width="80" Style="{StaticResource fontStyle}"
+                     Text="{Binding ServerPort}"/>
+            <Label Content="状态" Style="{StaticResource fontStyle}" />
+            <TextBox x:Name="textBoxForClientState" IsReadOnly="True"
+                     MinWidth="80" Style="{StaticResource fontStyle}"
+                     Text="{Binding ClientState}"/>
+            <Button x:Name="buttonForConnect" Style="{StaticResource fontStyle}" Content="连接"
+                    Padding="20 5" Margin="20 0" Click="buttonForConnect_Click"/>
+        </StackPanel>
+
+        <!-- Row 1 信息历史 -->
+        <!--TextBox x:Name="textBoxForHistoryMessage" Style="{StaticResource fontStyle}"
+                 TextWrapping="Wrap" Grid.Row="1" MinHeight="100" /-->
+        <ItemsControl x:Name="itemControlForHistoryMessages" ItemsSource="{Binding}" Grid.Row="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding SendTime}" />
+                        <TextBlock Text="{Binding MessageContent}" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- Row 2 消息输入 -->
+        <TextBox x:Name="textBoxForSendMessage" Style="{StaticResource fontStyle}"
+                 TextWrapping="Wrap" Grid.Row="2" MinHeight="100" AcceptsReturn="True" />
+        <!-- Row 3 发送按钮 -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                    Grid.Row="3">
+            <Button x:Name="buttonForSend" Style="{StaticResource fontStyle}" Content="发送"
+                    Margin="20 2" Padding="20 5" Click="buttonForSend_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
